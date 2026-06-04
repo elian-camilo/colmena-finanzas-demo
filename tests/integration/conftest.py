@@ -1,3 +1,4 @@
+import os
 import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import Session, SQLModel, create_engine, text
@@ -13,7 +14,7 @@ from app.infraestructure.database import get_session
 from app.presentation.api.dependencies import get_current_user
 
 # 1. Create engine to database in memory from tests
-DATABASE_URL = "postgresql://tester:test123@localhost:5433/testing_db"
+DATABASE_URL = os.getenv("TEST_DATABASE_URL", "postgresql://tester:test123@localhost:5433/testing_db")
 
 engine = create_engine(
     DATABASE_URL, 
