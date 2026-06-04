@@ -17,7 +17,7 @@ def test_create_debt(client, seed_db):
     assert data["amount"] == 100000.5
     assert data["type"] == "borrow"
     assert data["due_date"] == "2027-12-31"
-    assert data["is_settled"] == False
+    assert not data["is_settled"]
     assert data["user_id"] == 1
     assert "created_at" in data
 
