@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from app.infraestructure.unit_of_work import UnitOfWork
 from app.application.services.account_service import (
     CreateAccountUseCase,

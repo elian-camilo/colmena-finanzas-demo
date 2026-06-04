@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import MagicMock
 
 from app.application.services.debt_service import CreateDebtUseCase

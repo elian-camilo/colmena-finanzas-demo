@@ -1,7 +1,6 @@
 from sqlmodel import SQLModel, Field
 from enum import Enum
 from datetime import datetime, UTC
-from zoneinfo import ZoneInfo
 
 def utc_now():
     return datetime.now(UTC)
