@@ -48,6 +48,8 @@ jobs:
       run: uv run ruff check .
 
     - name: Execute Tests (Pytest)
+      env:
+        DATABASE_URL: postgresql://tester:test123@localhost:5433/testing_db
       run: uv run pytest
 
     - name: Login to GitHub Container Registry
