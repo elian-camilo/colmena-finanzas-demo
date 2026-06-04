@@ -1,0 +1,35 @@
+name: Test and Build
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test_and_build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Config uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        version: "latest"
+        enable-cache: true
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.12"
+
+    - name: Sync dependencies
+      run: uv sync --locked
+
+    - name: Execute Linter (Ruff)
+      run: uv run ruff check .
+
+    - name: Execute Tests (Pytest)
+      run: uv run pytest

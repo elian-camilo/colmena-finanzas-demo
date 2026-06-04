@@ -3,7 +3,6 @@ from app.application.interfaces.unit_of_work import IUnitOfWork
 from app.domain.entities.transaction import Transaction
 from app.domain.exceptions import (
     ResourceNotFoundException,  
-    InvalidAmountException,
     UnauthorizedException,
 )
 from app.core.logger import get_logger

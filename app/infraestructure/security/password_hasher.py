@@ -5,7 +5,7 @@ class PasswordHasher(PasswordHasherInterface):
     def __init__(self):
         self.password_hash = PasswordHash.recommended()
         
-        DUMMY_PASSWORD = self.password_hash.hash("dummy_password_crazy_long_to_avoid_collisions")
+        # DUMMY_PASSWORD = self.password_hash.hash("dummy_password_crazy_long_to_avoid_collisions")
 
     def hash_password(self, password: str) -> str:
         return self.password_hash.hash(password)
