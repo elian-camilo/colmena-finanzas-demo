@@ -1,23 +1,97 @@
 <div align="center">
-  <img src="app/presentation/web/static/img/logo.svg" alt="Money Panel Logo" width="150" height="150">
+  <img src="app/presentation/web/static/img/logo.svg" alt="Colmena Logo" width="150" height="150">
 </div>
 
-# Money Panel
+# Colmena — Finanzas Personales sin Ansiedad
 
-A clean, production-ready minimalist personal finance manager. Built from the ground up to showcase **Clean Architecture** principles in Python, featuring a decoupled backend REST API and a fast server-side rendered frontend.
+<div align="center">
+  <img src="app/presentation/web/static/img/screenshot.png" alt="Colmena Beta Screenshot" width="800">
+</div>
+
+> [!IMPORTANT]
+> **Aviso importante sobre este repositorio**
+> 
+> - **Demo pública:** Este repositorio es una demo pública (fase beta) de un proyecto privado y comercial en desarrollo activo.
+> - **Alcance limitado:** El código aquí expuesto es una muestra de las decisiones arquitectónicas (Clean Architecture) y la calidad de ingeniería aplicada, **no representa el producto final**.
+> - **Features avanzadas:** La versión privada incluye funcionalidades como registro asistido por IA, gestión de deudas dinámicas, entre otros.
+
+## ¿Qué es Colmena?
+
+Una app web y móvil para que cualquier persona registre sus ingresos, gastos, deudas y obligaciones de forma **simple, cálida y sin intimidar**. Pensada especialmente para el contexto colombiano, para quienes sienten ansiedad al hablar de dinero pero necesitan entender su situación financiera de forma clara.
+
+## La Necesidad
+
+Los usuarios colombianos no tienen herramientas locales que respeten su contexto cultural. Las apps de finanzas existentes suelen ser frías, complejas o extranjeras. **Necesitan transparencia sin presión, claridad sin tecnicismos.**
+
+## Propuesta de Valor
+
+- **Registro conversacional:** Dicta transacciones por voz o escribe sin frases complicadas *(Disponible en versión privada)*.
+- **Visualización empática:** Números grandes y amigables, barras de progreso, secciones claras.
+- **Seguimiento integral:** Ingresos, gastos, deudas (me deben / debo) y obligaciones en un solo lugar.
+- **Diseño cálido:** Inspirado en referentes globales modernos, pero enfocado en la cercanía local — nada intimidante.
+
+## Funcionalidades Disponibles (Versión Demo Pública)
+
+✅ **Auth:** Login/Registro seguro con JWT y HttpOnly Cookies.
+✅ **Dashboard:** Balance mensual y resumen rápido.
+✅ **Cuentas:** Gestión de múltiples cuentas (Efectivo, Ahorros, Tarjetas).
+✅ **Transacciones:** CUD manual y soporte estructural transaccional.
+✅ **Categorías:** Desglose de gastos por tipo.
+✅ **Obligaciones & Deudas:** Registro básico de deudas y próximos vencimientos.
+✅ **UI Minimalista:** Jinja2 SSR sin pesados frameworks JS, garantizando extrema rapidez.
+
+## Funcionalidades Próximas / Privadas
+
+🚀 Registro automático e inteligente mediante IA (Voz + Texto)
+🚀 Exportación a CSV y reportería financiera
+🚀 Notificaciones inteligentes de vencimientos
+🚀 Conciliación dinámica
+
+## A quién se dirige
+
+**Personas entre 18-45 años:**
+- Que manejan múltiples cuentas.
+- Que tienen deudas o préstamos personales.
+- Que quieren entender su dinero sin jerga financiera.
+- Que valoran diseño moderno y confianza local.
+
+## Análisis Competitivo
+
+| | **Colmena** | **Banca Tradicional / Neobancos** | **Apps Extranjeras** | **Hojas de Excel** |
+|---|---|---|---|---|
+| **Simplicidad** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ |
+| **Calidez/UX** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | — |
+| **Registro IA/Voz** | ✅ *(Versión Privada)* | ❌ | Algunos | ❌ |
+| **Deudas Personales** | ✅ | ❌ | Algunos | ✅ |
+| **Contexto Local** | ✅ | Neutral | ❌ | — |
+
+**Ventaja clave:** Somos la única alternativa que combina IA para el registro, gestión de deudas personales y calidez local sin complejidad. Competimos con el bloc de notas y el Excel, no con los bancos.
 
 ---
 
-## ⚡ Quick Start for Reviewers
+## 🛠️ Arquitectura y Calidad de Ingeniería
 
-If you are a recruiter or technical reviewer, you can get this project running locally in under 2 minutes.
+Este repositorio público actúa como portafolio técnico demostrando el uso de **Clean Architecture** en Python.
 
-**Prerequisites:** [Docker](https://docs.docker.com/get-docker/) & Docker Compose.
+| Capa | Responsabilidad | Contenido |
+|-------|----------------|----------|
+| **Domain** | Reglas core de negocio y entidades | Modelos Pydantic, Excepciones personalizadas |
+| **Application** | Casos de Uso (Use Cases) | Lógica orquestadora, interfaz `IUnitOfWork` |
+| **Infrastructure** | DB, ORM y APIs externas | Modelos SQLAlchemy, Repositorios, Adaptadores |
+| **Presentation** | Rutas Web y API | Routers FastAPI (JSON REST & UI Jinja2) |
 
-Run the following commands in your terminal:
+> **Decisión clave:** La capa de presentación (Routers) tiene prohibido el acceso directo a la base de datos. Todo fluye a través de los Casos de Uso inyectando un `UnitOfWork` para asegurar límites transaccionales y aislamiento.
+
+---
+
+## ⚡ Guía rápida para Reviewers
+
+Si eres reclutador o reviewer técnico, puedes levantar el entorno de desarrollo en minutos.
+
+**Requisitos:** [Docker](https://docs.docker.com/get-docker/) & Docker Compose.
 
 ```bash
-# 1. Setup the environment file
+# 1. Crea el archivo de variables de entorno
 cat <<EOF > .env
 DB_USER=postgres
 DB_PASSWORD=admin
@@ -28,69 +102,31 @@ DATABASE_URL=postgresql://postgres:admin@db:5432/money_panel
 SECRET_KEY=dev_secret_key_123
 EOF
 
-# 2. Spin up the application and database
+# 2. Levanta los servicios
 docker compose up -d
 
-# 3. Run database migrations inside the API container
+# 3. Ejecuta las migraciones estructurales
 docker compose exec api uv run alembic upgrade head
 ```
 
-Once running, open your browser at **[http://localhost:8000/login-page](http://localhost:8000/login-page)**, create an account, and log in!
+Abre tu navegador en **[http://localhost:8000/login-page](http://localhost:8000/login-page)**, crea un usuario de prueba y explora.
 
----
+## 🧪 Suite de Pruebas
 
-## 🛠️ Architecture at a Glance
+Mantenemos pruebas unitarias para aislar las reglas de negocio, y pruebas de integración conectadas a una DB real efímera.
 
-This project enforces strict boundaries and is a demonstration of highly scalable Python engineering.
-
-| Layer | Responsibility | Contains |
-|-------|----------------|----------|
-| **Domain** | Core business rules & entities | Pydantic entities, custom Exceptions |
-| **Application** | Use Cases & interfaces | Business logic, `IUnitOfWork` interface |
-| **Infrastructure** | Databases & external APIs | Postgres config, SQLAlchemy models, Repositories |
-| **Presentation** | Web & API Routes | FastAPI Routers (JSON API & Jinja2 Web UI) |
-
-> **Key Design Decision:** Routers are strictly forbidden from accessing the database directly. All operations flow through Use Cases injected with a `UnitOfWork` to guarantee atomicity and decoupling.
-
----
-
-## 🚀 Key Features
-
-- **Dual Interface**: A fully functional JSON REST API (`/api/v1`) alongside a Server-Side Rendered Web UI (`/web`).
-- **Secure Authentication**: JWT for API consumption and secure HttpOnly cookie-based auth for the Web UI.
-- **Financial Tracking**: Manage Transactions, Debts, Accounts, and Categories in one unified dashboard.
-- **Minimalist UI**: Built with pure Bootstrap 5 and Jinja2. Zero heavy JS frameworks, resulting in lightning-fast loads and high accessibility.
-
----
-
-## 🧪 Testing Suite
-
-This project maintains a robust testing environment covering both isolated unit tests for business logic and real database integration tests.
-
-To run the full test suite and visually see the execution process of each test, run the following command inside the active API container:
-
+Ejecuta todos los tests dentro del contenedor:
 ```bash
 docker compose exec -e TEST_DATABASE_URL=postgresql://tester:test123@db_test:5432/testing_db api uv run pytest -v
 ```
-
-> **Note:** The integration tests automatically spin up and connect to the dedicated `db_test` container defined in the `compose.yaml` to ensure they never touch your local data.
-
----
-
-## 🔮 The Future of Money Panel
-
-This public repository serves as a foundational demo of the architecture. Moving forward, **Money Panel is transitioning into a private development phase** where it will evolve from a portfolio project into a fully-fledged financial startup.
-
-**Upcoming Private Features:**
-- **AI Financial Analysis**: Deep insights into spending habits and saving opportunities using AI.
-- **Smart Receipt Capturing**: Automated expense logging through AI-powered image recognition and text extraction.
-- **Auto-completion & Predictive Entry**: Smart categorization and filling of transactions based on historical data.
+> **Nota:** Los test de integración levantan y consumen automáticamente la base de datos limpia en el contenedor `db_test` (evitando tocar tus datos de desarrollo).
 
 ---
 
-## ✉️ Contact
+## ✉️ Contacto
 
-Developed and architected by **Elian Camilo Angarita Sanguino**.
+Ingeniería y Arquitectura por **Elian Camilo Angarita Sanguino**.
 
-If you're interested in the future of this project, or just want to connect, feel free to reach out:
+Si te interesa el futuro comercial del producto, o simplemente quieres contactarme:
 - [LinkedIn Profile](https://www.linkedin.com/in/elian-camilo-angarita-sanguino/)
+- [Repositorio del Proyecto](https://github.com/elian-camilo/colmena-finanzas-demo)
