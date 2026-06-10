@@ -33,12 +33,19 @@ Los usuarios colombianos no tienen herramientas locales que respeten su contexto
 ## Funcionalidades Disponibles (Versión Demo Pública)
 
 ✅ **Auth:** Login/Registro seguro con JWT y HttpOnly Cookies.
+
 ✅ **Dashboard:** Balance mensual y resumen rápido.
+
 ✅ **Cuentas:** Gestión de múltiples cuentas (Efectivo, Ahorros, Tarjetas).
+
 ✅ **Transacciones:** CUD manual y soporte estructural transaccional.
+
 ✅ **Categorías:** Desglose de gastos por tipo.
+
 ✅ **Obligaciones & Deudas:** Registro básico de deudas y próximos vencimientos.
+
 ✅ **UI Minimalista:** Jinja2 SSR sin pesados frameworks JS, garantizando extrema rapidez.
+
 
 ## Funcionalidades Próximas / Privadas
 
